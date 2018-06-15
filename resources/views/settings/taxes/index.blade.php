@@ -4,7 +4,7 @@
 
 @permission('create-settings-taxes')
 @section('new_button')
-<span class="new-button"><a href="{{ url('settings/taxes/create') }}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;Add New</a></span>
+<span class="new-button"><a href="{{ url('settings/taxes/create') }}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
 @endsection
 @endpermission
 
@@ -56,7 +56,13 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a href="{{ url('settings/taxes/' . $item->id . '/edit') }}">{{ trans('general.edit') }}</a></li>
+                                    @if ($item->enabled)
+                                    <li><a href="{{ route('taxes.disable', $item->id) }}">{{ trans('general.disable') }}</a></li>
+                                    @else
+                                    <li><a href="{{ route('taxes.enable', $item->id) }}">{{ trans('general.enable') }}</a></li>
+                                    @endif
                                     @permission('delete-settings-taxes')
+                                    <li class="divider"></li>
                                     <li>{!! Form::deleteLink($item, 'settings/taxes', 'tax_rates') !!}</li>
                                     @endpermission
                                 </ul>
